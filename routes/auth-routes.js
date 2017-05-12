@@ -149,4 +149,20 @@ authRoutes.get('/logout', (req, res, next) => {
 });
 
 
+  //                                                    facebook as in "FbStrategy"
+  //                                                        |
+authRoutes.get('/auth/facebook', passport.authenticate('facebook'));
+  //                  |
+  //  Link to this address to log in with Facebook
+
+
+  // Where Facebook comes back to after the user has accepted/rejected
+  //  callbackURL: '/auth/facebook/callback'
+  //                        |
+authRoutes.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
+
+
 module.exports = authRoutes;
