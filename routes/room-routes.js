@@ -43,4 +43,27 @@ router.post('/rooms',
 );
 
 
+router.get('/rooms',
+  ensure.ensureLoggedIn(),
+
+  (req, res, next) => {
+    Room.find(
+      { owner: req.user._id },
+
+      (err, roomsList) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.render('rooms/rooms-list-view.ejs', {
+          rooms: roomsList,
+          successMessage: req.flash('success')
+        });
+      }
+    );
+  }
+);
+
+
 module.exports = router;
